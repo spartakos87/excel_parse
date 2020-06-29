@@ -4,6 +4,11 @@ from collections import OrderedDict
 from json import dump
 
 def parse_excel(f):
+	val_dict={
+			1: 'Extractable model output',
+			2: 'Interlinkable model input',
+			3: 'No explicit output or input'
+			}
 	book = xlrd.open_workbook('new_for_parsing.xlsx')
 	sheet = book.sheet_by_name('Summary (3 options)')
 	data_dict = OrderedDict()	
@@ -19,7 +24,7 @@ def parse_excel(f):
 				sdg_title = sheet.cell(sdg,1).value
 				if sdg_title != '':
 					if value !='':
-						value =int(value)
+						value =val_dict[int(value)]
 					temp[sdg_title] = value
 			data_dict[model_title] = temp
 	with open('file_parsing_data.json','w') as fp:
